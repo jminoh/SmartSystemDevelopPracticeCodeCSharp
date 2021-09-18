@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
-
+using System.Runtime.InteropServices;
 
 namespace myNotepad
 {
@@ -19,6 +19,12 @@ namespace myNotepad
         {
             InitializeComponent();
         }
+        [DllImport("kernel32.dll")]
+        static extern int GetPrivateProfileString(string sec, string key, string def, StringBuilder buf, int bSize, string Path);
+
+        [DllImport("kernel32.dll")]
+        static extern bool WritePrivateProfileString(string sec, string key, string val, string Path);
+
         string GetTokenJM(int n, string str, char d)        // 0이 C:
         {                                                   // for문 str.Length 문제 아님. return 못타고 밖의 for문 타서 연속해서 찍힘
             int count = 0;                                  // string GetToken(int n, string str, char d)
@@ -68,6 +74,10 @@ namespace myNotepad
             return "";                                      // 경로 나눠놓은 것보다 n이 크면 ""
         }
 
+        void AddLine(string str)
+        {
+            tbMemo.Text += str + "\r\n";
+        }
 
 
 
@@ -178,13 +188,13 @@ namespace myNotepad
                 sr.Close();                                                     // Stream 객체 닫아줌
                 this.Text = "NotePad v1.0  " + $"{filePath:s}";                 // 프로그램 title bar, 파일 경로 달라졌으니 반영
                 //tbMemo.Text = filePath;
-                tbMemo.Text = GetToken1(4, filePath, '\\' );                    // GetToken 시험
+                //tbMemo.Text = GetToken1(4, filePath, '\\' );                    // GetToken 시험
             }
         }
 
         private void mnuFileSave_Click(object sender, EventArgs e)
         {
-            saveFileDialog.FileName = Path.GetFileName(filePath);               // 저장 누를 시, 오픈했던 파일명 나옴.
+            saveFileDialog.FileName = Path.GetFileName(filePath);               // 저장 누를 시, 오픈했던 파일명 나옴. // saveFileDialog는
             saveFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
             saveFileDialog.FilterIndex = 2;
             if(filePath != null)
@@ -230,7 +240,98 @@ namespace myNotepad
         int num = 0;
         private void mnuEditTest_Click(object sender, EventArgs e)              // GetToken 시험
         {
-            tbMemo.Text += $"{GetToken(num++, "a,b,c,d", ',')}";        
+            AddLine($"{GetToken(num++, "a,b,c,d", ',')}");
+            //tbMemo.Text += $"{GetToken(num++, "a,b,c,d", ',')}";
+            tbMemo.Text = GetTokenJM(4, filePath, '\\');
+        }
+
+
+        Point p;
+        private void mnuEditCallTest_Click(object sender, EventArgs e)
+        {
+            Form2 dlg = new Form2();                                            // dlg의 유효범위는 CallTest 메서드 안
+            dlg.Location = p;                                                   // 최초의 위치 p(전역변수)
+            //if(sbLabel1.Text != "")                                           // 직전의 CallTest 내용 다시  // speed, parity, databit에 "," 더해야 함
+            //{
+            //    if (sbLabel1.Text.Substring(0, 4) == dlg.rbCOM1.Text) dlg.rbCOM1.Checked = true;
+            //    else dlg.rbCOM2.Checked = true;
+            //    string str1 = sbLabel1.Text.Substring(5, sbLabel1.Text.Length - 5);
+            //    dlg.cbbSpeed.Text = GetTokenJM(0, str1, ',');
+            //    dlg.cbbParity.Text = GetTokenJM(1, str1, ',');
+            //    dlg.cbbDatabit.Text = GetTokenJM(2, str1, ',');
+            //    dlg.cbbStopbit.Text = GetTokenJM(3, str1, ',');
+            //}
+
+            if(sbLabel1.Text != "")                                             // 직전의 CallTest 내용 다시  // "," 없이
+            {
+                string str1 = GetTokenJM(0, sbLabel1.Text, ':');
+                string str2 = GetTokenJM(1, sbLabel1.Text, ':');
+                if (str1 == dlg.rbCOM1.Text) dlg.rbCOM1.Checked = true;
+                else dlg.rbCOM2.Checked = true;
+                dlg.cbbSpeed.Text = str2.Substring(0, str2.Length - 3);
+                dlg.cbbParity.Text = str2.Substring(str2.Length - 3, 1);
+                dlg.cbbDatabit.Text = str2.Substring(str2.Length - 2, 1);
+                dlg.cbbStopbit.Text = str2.Substring(str2.Length - 1, 1);       
+            }
+
+            //if (sbLabel1.Text != "")                                              // 강사님. , 하나만 넣고  // 아직 쳐야할 거 남음
+            //{
+            //    string s1, s2, s3;
+            //    s1 = GetToken(0, sbLabel1.Text, ':');
+            //    if (s1 == "com1") dlg.rbCOM1.Checked = true;
+            //    else if (s1 == "com2") dlg.rbCOM2.Checked = true;
+
+            //    //s3 = gettoken(1, sblabel1.text, ':'); // com1:9600:,n81 ==> 9600,n81
+            //    //s2 = gettoken(0, s3, ','); // 9600,n81 ==> 9600
+            //    s2 = GetToken(0, GetToken(1, sbLabel1.Text, ':'), ',');
+            //    dlg.cbbSpeed.Text = s2;
+
+            //    s3 = GetToken(1, sbLabel1.Text, ',');   // N81
+
+            //    //dlg.cbbParity.Text = (s3[0] == 'N') ? "  none" : // 8
+            //    //                    (s3[0] == 'O') ? "  odd" :
+            //    //                    (s3[0] == 'E') ? "  Even" : "";
+
+            //}
+
+
+                if (dlg.ShowDialog() == DialogResult.OK)                             // COM1:9600N81 문자열 만들기
+            {
+                //string str;
+                //if (dlg.rbCOM1.Checked) str = "COM1:";                        // 삼항연산자와 동일
+                //else if (dlg.rbCOM2.Checked) str = "COM2:";
+                //else str = "XXX:";
+
+                // 3개라면, 오른쪽을 또 다른 삼항연산자로 만듦
+                // string str = (dlg.rbCOM1.Checked)? "COM1:":
+                //  (dlg.rbCOM2.Checked)? "COM2:":"XXXX";
+                string str = (dlg.rbCOM1.Checked)? "COM1:":"COM2:" ;            // 삼항연산자 사용     
+                str += dlg.cbbSpeed.Text;                                       
+                str += dlg.cbbParity.Text.Trim().ToUpper()[0];                  // None, Odd, Even: 한글자씩만 // 소문자인데 대문자로 바꿔서 출력 원하면 // Substring(0, 1)   
+                str += dlg.cbbDatabit.Text;
+                str += dlg.cbbStopbit.Text;
+                
+                //AddLine(str);
+                sbLabel1.Text = str;
+            }
+            p = dlg.Location;                                                   // 다음 호출땐 변화된 위치로
+        }
+
+        string iniPath = ".\\myNotepad.ini";  // '.ini' 파일 전체 경로 // 실행파일과 같은 곳에 있을 땐, 파일이름만 써도 됨
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            StringBuilder buf = new StringBuilder(500);  // ini 파일 데이터('='우측의 value의 최대 사이즈)
+
+            //GetPrivateProfileString(string sec, string key, string def, StringBuilder buf, int bSize, string Path);
+            GetPrivateProfileString("Form1", "LocationX", "0", buf, 500, iniPath); int x = int.Parse(buf.ToString());
+            GetPrivateProfileString("Form1", "LocationY", "0", buf, 500, iniPath); int y = int.Parse(buf.ToString());
+            Location = new Point(x, y);
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            WritePrivateProfileString("Form1", "LocationX", $"{Location.X}", iniPath);
+            WritePrivateProfileString("Form1", "LocationX", $"{Location.Y}", iniPath);
         }
     }
 }

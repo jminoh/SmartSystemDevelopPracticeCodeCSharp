@@ -8,3 +8,4 @@ C:\Users\snows\source\repos\C#\myNotepad\obj\Debug\myNotepad.csproj.GenerateReso
 C:\Users\snows\source\repos\C#\myNotepad\obj\Debug\myNotepad.csproj.CoreCompileInputs.cache
 C:\Users\snows\source\repos\C#\myNotepad\obj\Debug\myNotepad.exe
 C:\Users\snows\source\repos\C#\myNotepad\obj\Debug\myNotepad.pdb
+C:\Users\snows\source\repos\C#\myNotepad\obj\Debug\myNotepad.Form2.resources

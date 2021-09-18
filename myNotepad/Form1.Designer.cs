@@ -42,6 +42,8 @@ namespace myNotepad
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuFileExit = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuEditTest = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuEditCallTest = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuViewLower = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuViewUpper = new System.Windows.Forms.ToolStripMenuItem();
@@ -52,8 +54,11 @@ namespace myNotepad
             this.tbMemo = new System.Windows.Forms.TextBox();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.mnuEditTest = new System.Windows.Forms.ToolStripMenuItem();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.sbLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.sbLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.mainMenu.SuspendLayout();
+            this.statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // mainMenu
@@ -90,72 +95,87 @@ namespace myNotepad
             // mnuFileNew
             // 
             this.mnuFileNew.Name = "mnuFileNew";
-            this.mnuFileNew.Size = new System.Drawing.Size(224, 26);
+            this.mnuFileNew.Size = new System.Drawing.Size(181, 26);
             this.mnuFileNew.Text = "New";
             this.mnuFileNew.Click += new System.EventHandler(this.mnuFileNew_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(221, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(178, 6);
             // 
             // mnuFileOpen
             // 
             this.mnuFileOpen.Name = "mnuFileOpen";
-            this.mnuFileOpen.Size = new System.Drawing.Size(224, 26);
+            this.mnuFileOpen.Size = new System.Drawing.Size(181, 26);
             this.mnuFileOpen.Text = "Open";
             this.mnuFileOpen.Click += new System.EventHandler(this.mnuFileOpen_Click);
             // 
             // mnuFileSave
             // 
             this.mnuFileSave.Name = "mnuFileSave";
-            this.mnuFileSave.Size = new System.Drawing.Size(224, 26);
+            this.mnuFileSave.Size = new System.Drawing.Size(181, 26);
             this.mnuFileSave.Text = "Save";
             this.mnuFileSave.Click += new System.EventHandler(this.mnuFileSave_Click);
             // 
             // mnuFileSaveAs
             // 
             this.mnuFileSaveAs.Name = "mnuFileSaveAs";
-            this.mnuFileSaveAs.Size = new System.Drawing.Size(224, 26);
+            this.mnuFileSaveAs.Size = new System.Drawing.Size(181, 26);
             this.mnuFileSaveAs.Text = "Save AS...";
             this.mnuFileSaveAs.Click += new System.EventHandler(this.mnuFileSaveAs_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(221, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(178, 6);
             // 
             // mnuFilePrint
             // 
             this.mnuFilePrint.Name = "mnuFilePrint";
-            this.mnuFilePrint.Size = new System.Drawing.Size(224, 26);
+            this.mnuFilePrint.Size = new System.Drawing.Size(181, 26);
             this.mnuFilePrint.Text = "Print";
             // 
             // mnuFilePrintPreview
             // 
             this.mnuFilePrintPreview.Name = "mnuFilePrintPreview";
-            this.mnuFilePrintPreview.Size = new System.Drawing.Size(224, 26);
+            this.mnuFilePrintPreview.Size = new System.Drawing.Size(181, 26);
             this.mnuFilePrintPreview.Text = "Print Preview";
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(221, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(178, 6);
             // 
             // mnuFileExit
             // 
             this.mnuFileExit.Name = "mnuFileExit";
-            this.mnuFileExit.Size = new System.Drawing.Size(224, 26);
+            this.mnuFileExit.Size = new System.Drawing.Size(181, 26);
             this.mnuFileExit.Text = "Exit";
             this.mnuFileExit.Click += new System.EventHandler(this.mnuFileExit_Click);
             // 
             // editToolStripMenuItem
             // 
             this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuEditTest});
+            this.mnuEditTest,
+            this.mnuEditCallTest});
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(49, 24);
             this.editToolStripMenuItem.Text = "Edit";
+            // 
+            // mnuEditTest
+            // 
+            this.mnuEditTest.Name = "mnuEditTest";
+            this.mnuEditTest.Size = new System.Drawing.Size(150, 26);
+            this.mnuEditTest.Text = "Test";
+            this.mnuEditTest.Click += new System.EventHandler(this.mnuEditTest_Click);
+            // 
+            // mnuEditCallTest
+            // 
+            this.mnuEditCallTest.Name = "mnuEditCallTest";
+            this.mnuEditCallTest.Size = new System.Drawing.Size(150, 26);
+            this.mnuEditCallTest.Text = "Call Test";
+            this.mnuEditCallTest.Click += new System.EventHandler(this.mnuEditCallTest_Click);
             // 
             // viewToolStripMenuItem
             // 
@@ -207,7 +227,7 @@ namespace myNotepad
             // aboutMyNotepadToolStripMenuItem
             // 
             this.aboutMyNotepadToolStripMenuItem.Name = "aboutMyNotepadToolStripMenuItem";
-            this.aboutMyNotepadToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.aboutMyNotepadToolStripMenuItem.Size = new System.Drawing.Size(223, 26);
             this.aboutMyNotepadToolStripMenuItem.Text = "About my Notepad";
             // 
             // tbMemo
@@ -220,7 +240,7 @@ namespace myNotepad
             this.tbMemo.Multiline = true;
             this.tbMemo.Name = "tbMemo";
             this.tbMemo.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbMemo.Size = new System.Drawing.Size(665, 407);
+            this.tbMemo.Size = new System.Drawing.Size(665, 379);
             this.tbMemo.TabIndex = 1;
             this.tbMemo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbMemo_KeyDown);
             // 
@@ -233,25 +253,45 @@ namespace myNotepad
             // 
             this.saveFileDialog.FileName = "saveFileDialog";
             // 
-            // mnuEditTest
+            // statusStrip
             // 
-            this.mnuEditTest.Name = "mnuEditTest";
-            this.mnuEditTest.Size = new System.Drawing.Size(224, 26);
-            this.mnuEditTest.Text = "Test";
-            this.mnuEditTest.Click += new System.EventHandler(this.mnuEditTest_Click);
+            this.statusStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.sbLabel1,
+            this.sbLabel2});
+            this.statusStrip.Location = new System.Drawing.Point(0, 415);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.Size = new System.Drawing.Size(666, 22);
+            this.statusStrip.TabIndex = 2;
+            this.statusStrip.Text = "statusStrip";
+            // 
+            // sbLabel1
+            // 
+            this.sbLabel1.Name = "sbLabel1";
+            this.sbLabel1.Size = new System.Drawing.Size(0, 16);
+            // 
+            // sbLabel2
+            // 
+            this.sbLabel2.Name = "sbLabel2";
+            this.sbLabel2.Size = new System.Drawing.Size(0, 16);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(666, 437);
+            this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.tbMemo);
             this.Controls.Add(this.mainMenu);
             this.MainMenuStrip = this.mainMenu;
             this.Name = "Form1";
             this.Text = "NotePad v1.0";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.mainMenu.ResumeLayout(false);
             this.mainMenu.PerformLayout();
+            this.statusStrip.ResumeLayout(false);
+            this.statusStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -283,6 +323,10 @@ namespace myNotepad
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
         private System.Windows.Forms.ToolStripMenuItem mnuEditTest;
+        private System.Windows.Forms.ToolStripMenuItem mnuEditCallTest;
+        private System.Windows.Forms.StatusStrip statusStrip;
+        private System.Windows.Forms.ToolStripStatusLabel sbLabel1;
+        private System.Windows.Forms.ToolStripStatusLabel sbLabel2;
     }
 }
 

@@ -259,10 +259,10 @@ namespace WindowsFormsApp1
             }
         }
 
-        private void cbbDiv_KeyDown(object sender, KeyEventArgs e)
+        private void cbbDiv_KeyDown(object sender, KeyEventArgs e)              // 완성. 콤보박스에서 이벤트 되돌리기 ESC로 
         {
-            if (e.KeyCode == Keys.Escape)
-                cbbDiv.SelectedIndexChanged
+            if (e.KeyCode == Keys.Escape) cbbDiv.SelectedIndex = 3;
+
         }
         // 콤보박스 내에서 키 다운 만들면 n만 바꿔주면 가능함. 제어권 현재 콤보박스 내에 있음
     }
