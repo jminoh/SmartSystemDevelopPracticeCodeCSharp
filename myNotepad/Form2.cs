@@ -27,7 +27,7 @@ namespace myNotepad
         static extern bool WritePrivateProfileString(string sec, string key, string val, string Path);
 
         string iniPath = ".\\myNotepad.ini";  // '.ini' 파일 전체 경로 // 실행파일과 같은 곳에 있을 땐, 파일이름만 써도 됨
-     
+
         private void Form2_Load_1(object sender, EventArgs e)
         {
             StringBuilder buf = new StringBuilder(500);  // ini 파일 데이터('='우측의 value의 최대 사이즈)
@@ -41,7 +41,7 @@ namespace myNotepad
         private void Form2_FormClosing(object sender, FormClosingEventArgs e)
         {
             WritePrivateProfileString("Form2", "LocationX2", $"{Location.X}", iniPath);
-            WritePrivateProfileString("Form2", "LocationX2", $"{Location.Y}", iniPath);
+            WritePrivateProfileString("Form2", "LocationY2", $"{Location.Y}", iniPath);
         }
     }
 }

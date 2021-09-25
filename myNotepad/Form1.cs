@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Runtime.InteropServices;
+using myLibrary;
 
 namespace myNotepad
 {
@@ -19,70 +20,17 @@ namespace myNotepad
         {
             InitializeComponent();
         }
-        [DllImport("kernel32.dll")]
-        static extern int GetPrivateProfileString(string sec, string key, string def, StringBuilder buf, int bSize, string Path);
+        //[DllImport("kernel32.dll")]                                                                                                       // IniClass 사용하지 않을 경우 필요
+        //static extern int GetPrivateProfileString(string sec, string key, string def, StringBuilder buf, int bSize, string Path);
 
-        [DllImport("kernel32.dll")]
-        static extern bool WritePrivateProfileString(string sec, string key, string val, string Path);
+        //[DllImport("kernel32.dll")]
+        //static extern bool WritePrivateProfileString(string sec, string key, string val, string Path);
 
-        string GetTokenJM(int n, string str, char d)        // 0이 C:
-        {                                                   // for문 str.Length 문제 아님. return 못타고 밖의 for문 타서 연속해서 찍힘
-            int count = 0;                                  // string GetToken(int n, string str, char d)
-            string re = "";                                 // n: n번째 Item, str: 문자열, d: 구분자, 
-            char[] chr = str.ToCharArray();                 // 문자열 str에 있는 데이터를 구분자 d를 통해 필드 구분하여, 그 중 n번째 데이터 반환
-            for(int i = 0; i < str.Length; i++)             // ex) GetToken(1, "a,b,c,d", ',') => "b"
-            {
-                if (d == chr[i]) count += 1;                // 구분자 만나면 구분자 카운트++, n이랑 비교할 거
-                if (n == 0)                                 // 0번째 Item이면 구분자 나오기 전까지
-                    for (int j = 0; j < str.Length; j++)
-                    {
-                        re += chr[j];                       // 구분자 만나기 전까지 돌아서
-                        if (d == str[j + 1]) return re;     // 만나면 return
-                    }
-                if (n == count)                             // n과 구분자 만나버리면 print할 것 저장 시작
-                {
-                    for (int j = i + 1; j < str.Length; j++)// 구분자 다음부터 string에 저장
-                    {
-                        if (d == chr[j]) return re;         // 다음 문자가 구분자면 return
-                        re += chr[j];                       // 다음 문자가 구분자 아니면 string에 저장
-                    }
-                    return re;                              // 구분자 못 만나고 끝까지 저장했으면 return
-                }
-            }
-            return re;
-        }
-        string GetToken1(int n, string str, char d)         // 강사님
-        {                                                   // 경계조건 잘 생각해야
-            int i, j, k, n1, n2;                            //n1 = start, n2 = end
-                                                            // k = 구분자 개수, 다 돌게 되어 d = k
-            for (i = j = k = n1 = n2 = 0; i < str.Length; i++)
-            {
-                if (str[i] == d) k++;                       // 구분자 만나면 k++
-                if (k == n)                                                                                 // ***********이거 계속 탐 수정 어떻게 하심??????
-                    n1 = i;                                 // n번째 구분자면 n1에 반환할 첫 문자 위치                 // 아래 if문 이거 종속으로 넣고, n2 = i후에 i = str.Length 해야 함??                                
-                if (k == n + 1) n2 = i;                     // n+1번째 구분자면 n2에 반환 문자열 마지막 문자 위치
-            }
-            if (n1 == 0) return "";                         // 구분자가 첫 자면 반환
-            if (n2 == 0) n2 = str.Length + 1;
-            return str.Substring(n1, (n2 - 1) - n1);
-        }
-
-        string GetToken(int n, string str, char d)          // 강사님
-        {
-            string[] sArr = str.Split(d);                   // 구분자로 문자열 나눠 문자열 배열에 집어 넣음
-            if(n < sArr.Length) return sArr[n];             // 구분자로 구분된 string들, n이랑 index 맞음, 정보 있으면 해당 index 반환
-            return "";                                      // 경로 나눠놓은 것보다 n이 크면 ""
-        }
 
         void AddLine(string str)
         {
             tbMemo.Text += str + "\r\n";
         }
-
-
-
-
-
 
         string strOrg = "";                                   // String Original
         int viewState = 0;                                    // 0: Normal(Edit 가능)  1: Lower   2: Upper   3: Hexa
@@ -237,12 +185,13 @@ namespace myNotepad
             Application.Exit();
         }
 
+        // mylib ml = new mylib();
         int num = 0;
         private void mnuEditTest_Click(object sender, EventArgs e)              // GetToken 시험
         {
-            AddLine($"{GetToken(num++, "a,b,c,d", ',')}");
+            AddLine($"{mylib.GetToken(num++, "a,b,c,d", ',')}");
             //tbMemo.Text += $"{GetToken(num++, "a,b,c,d", ',')}";
-            tbMemo.Text = GetTokenJM(4, filePath, '\\');
+            tbMemo.Text = mylib.GetTokenJM(4, filePath, '\\');
         }
 
 
@@ -264,8 +213,8 @@ namespace myNotepad
 
             if(sbLabel1.Text != "")                                             // 직전의 CallTest 내용 다시  // "," 없이
             {
-                string str1 = GetTokenJM(0, sbLabel1.Text, ':');
-                string str2 = GetTokenJM(1, sbLabel1.Text, ':');
+                string str1 = mylib.GetTokenJM(0, sbLabel1.Text, ':');
+                string str2 = mylib.GetTokenJM(1, sbLabel1.Text, ':');
                 if (str1 == dlg.rbCOM1.Text) dlg.rbCOM1.Checked = true;
                 else dlg.rbCOM2.Checked = true;
                 dlg.cbbSpeed.Text = str2.Substring(0, str2.Length - 3);
@@ -317,21 +266,37 @@ namespace myNotepad
             p = dlg.Location;                                                   // 다음 호출땐 변화된 위치로
         }
 
-        string iniPath = ".\\myNotepad.ini";  // '.ini' 파일 전체 경로 // 실행파일과 같은 곳에 있을 땐, 파일이름만 써도 됨
+        string iniPath = ".\\myNotepad.ini";                                    // '.ini' 파일 전체 경로 // 실행파일과 같은 곳에 있을 땐, 파일이름만 써도 됨
+        IniClass ini = new IniClass(".\\myNotepad.ini");                        // 절대경로로            // 선언, 사전 준비 필요 X
+        IniClass ini2 = new IniClass(".\\myNotepadEx.ini");                                             // 위와 전혀 다름         // GetToken과 비교
         private void Form1_Load(object sender, EventArgs e)
         {
-            StringBuilder buf = new StringBuilder(500);  // ini 파일 데이터('='우측의 value의 최대 사이즈)
+            //StringBuilder buf = new StringBuilder(500);                         // ini 파일 데이터('='우측의 value의 최대 사이즈) // IniClass 이용 X 방법
 
-            //GetPrivateProfileString(string sec, string key, string def, StringBuilder buf, int bSize, string Path);
-            GetPrivateProfileString("Form1", "LocationX", "0", buf, 500, iniPath); int x = int.Parse(buf.ToString());
-            GetPrivateProfileString("Form1", "LocationY", "0", buf, 500, iniPath); int y = int.Parse(buf.ToString());
+            //GetPrivateProfileString(string sec, string key, string def, StringBuilder buf, int bSize, string Path);       // IniClass 이용 X 방법
+            //GetPrivateProfileString("Form1", "LocationX", "0", buf, 500, iniPath); int x = int.Parse(buf.ToString());     // IniClass 이용 X 방법
+            //GetPrivateProfileString("Form1", "LocationY", "0", buf, 500, iniPath); int y = int.Parse(buf.ToString());     // IniClass 이용 X 방법
+            int x = int.Parse(ini.GetString("Form1", "LocationX", "0"));             // 에러 가능성 존재. 한번이라도 Write되면 문제 없으나, null 문자열 입력 시(ini file 없을 시) 에러.(int.parse에서) => 예외처리 필요
+            int y = int.Parse(ini.GetString("Form1", "LocationY", "0"));
             Location = new Point(x, y);
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            WritePrivateProfileString("Form1", "LocationX", $"{Location.X}", iniPath);
-            WritePrivateProfileString("Form1", "LocationX", $"{Location.Y}", iniPath);
+            //WritePrivateProfileString("Form1", "LocationX", $"{Location.X}", iniPath);
+            //WritePrivateProfileString("Form1", "LocationY", $"{Location.Y}", iniPath);
+            ini.WriteString("Form1", "LocationX", $"{Location.X}");
+            ini.WriteString("Form1", "LocationY", $"{Location.Y}");
+        }
+
+        private void callTest2ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AddLine(mylib.GetInput("문자열 입력 테스트"));
+            //frmInput frm = new frmInput("문자열 입력 테스트");
+            //if(frm.ShowDialog() == DialogResult.OK)
+            //{
+            //    AddLine(frm.retStr);
+            //}
         }
     }
 }

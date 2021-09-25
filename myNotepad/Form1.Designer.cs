@@ -57,6 +57,7 @@ namespace myNotepad
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.sbLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.sbLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.callTest2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainMenu.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
@@ -158,7 +159,8 @@ namespace myNotepad
             // 
             this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuEditTest,
-            this.mnuEditCallTest});
+            this.mnuEditCallTest,
+            this.callTest2ToolStripMenuItem});
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(49, 24);
             this.editToolStripMenuItem.Text = "Edit";
@@ -166,14 +168,14 @@ namespace myNotepad
             // mnuEditTest
             // 
             this.mnuEditTest.Name = "mnuEditTest";
-            this.mnuEditTest.Size = new System.Drawing.Size(150, 26);
+            this.mnuEditTest.Size = new System.Drawing.Size(224, 26);
             this.mnuEditTest.Text = "Test";
             this.mnuEditTest.Click += new System.EventHandler(this.mnuEditTest_Click);
             // 
             // mnuEditCallTest
             // 
             this.mnuEditCallTest.Name = "mnuEditCallTest";
-            this.mnuEditCallTest.Size = new System.Drawing.Size(150, 26);
+            this.mnuEditCallTest.Size = new System.Drawing.Size(224, 26);
             this.mnuEditCallTest.Text = "Call Test";
             this.mnuEditCallTest.Click += new System.EventHandler(this.mnuEditCallTest_Click);
             // 
@@ -191,28 +193,28 @@ namespace myNotepad
             // mnuViewLower
             // 
             this.mnuViewLower.Name = "mnuViewLower";
-            this.mnuViewLower.Size = new System.Drawing.Size(188, 26);
+            this.mnuViewLower.Size = new System.Drawing.Size(224, 26);
             this.mnuViewLower.Text = "소문자로...";
             this.mnuViewLower.Click += new System.EventHandler(this.mnuViewLower_Click);
             // 
             // mnuViewUpper
             // 
             this.mnuViewUpper.Name = "mnuViewUpper";
-            this.mnuViewUpper.Size = new System.Drawing.Size(188, 26);
+            this.mnuViewUpper.Size = new System.Drawing.Size(224, 26);
             this.mnuViewUpper.Text = "대문자로...";
             this.mnuViewUpper.Click += new System.EventHandler(this.mnuViewUpper_Click);
             // 
             // mnuViewHexa
             // 
             this.mnuViewHexa.Name = "mnuViewHexa";
-            this.mnuViewHexa.Size = new System.Drawing.Size(188, 26);
+            this.mnuViewHexa.Size = new System.Drawing.Size(224, 26);
             this.mnuViewHexa.Text = "16진수로 보기";
             this.mnuViewHexa.Click += new System.EventHandler(this.mnuViewHexa_Click);
             // 
             // mnuViewRefresh
             // 
             this.mnuViewRefresh.Name = "mnuViewRefresh";
-            this.mnuViewRefresh.Size = new System.Drawing.Size(188, 26);
+            this.mnuViewRefresh.Size = new System.Drawing.Size(224, 26);
             this.mnuViewRefresh.Text = "되돌리기";
             this.mnuViewRefresh.Click += new System.EventHandler(this.mnuViewRefresh_Click);
             // 
@@ -275,6 +277,13 @@ namespace myNotepad
             this.sbLabel2.Name = "sbLabel2";
             this.sbLabel2.Size = new System.Drawing.Size(0, 16);
             // 
+            // callTest2ToolStripMenuItem
+            // 
+            this.callTest2ToolStripMenuItem.Name = "callTest2ToolStripMenuItem";
+            this.callTest2ToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.callTest2ToolStripMenuItem.Text = "Call Test #2";
+            this.callTest2ToolStripMenuItem.Click += new System.EventHandler(this.callTest2ToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -327,6 +336,7 @@ namespace myNotepad
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel sbLabel1;
         private System.Windows.Forms.ToolStripStatusLabel sbLabel2;
+        private System.Windows.Forms.ToolStripMenuItem callTest2ToolStripMenuItem;
     }
 }
 
