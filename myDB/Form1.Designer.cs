@@ -33,24 +33,41 @@ namespace myDB
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.dbGrid = new System.Windows.Forms.DataGridView();
             this.PopupMenu1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.pmnuUpdate = new System.Windows.Forms.ToolStripMenuItem();
+            this.pmnuInsert = new System.Windows.Forms.ToolStripMenuItem();
+            this.pmnuDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.pmnuColumnAdd = new System.Windows.Forms.ToolStripMenuItem();
             this.pmnuRowAdd = new System.Windows.Forms.ToolStripMenuItem();
-            this.pmnuUpdate = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
+            this.pmnuDeleteColumn = new System.Windows.Forms.ToolStripMenuItem();
+            this.pmnuDeleteRow = new System.Windows.Forms.ToolStripMenuItem();
+            this.pmnuColumnInfo = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMain = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuMigration = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuMigrationImport = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuMigrationExport = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuOpen = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuSave = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuSaveas = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuUpdateTable = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuCreateTable = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuExit = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuColumnAdd = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuRowAdd = new System.Windows.Forms.ToolStripMenuItem();
             this.sQLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.executeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuExecute = new System.Windows.Forms.ToolStripMenuItem();
+            this.configToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.textFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuTextUtf8 = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuTextAnsi = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuEcho = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuEchoText = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuEchoGrid = new System.Windows.Forms.ToolStripMenuItem();
             this.tbMemo = new System.Windows.Forms.TextBox();
             this.PopupMenu2 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.pmnuExecute = new System.Windows.Forms.ToolStripMenuItem();
@@ -59,8 +76,6 @@ namespace myDB
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.sbLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.sbLabel2 = new System.Windows.Forms.ToolStripDropDownButton();
-            this.pmnuInsert = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             ((System.ComponentModel.ISupportInitialize)(this.dbGrid)).BeginInit();
             this.PopupMenu1.SuspendLayout();
             this.menuMain.SuspendLayout();
@@ -92,32 +107,82 @@ namespace myDB
             this.PopupMenu1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.pmnuUpdate,
             this.pmnuInsert,
+            this.pmnuDelete,
             this.toolStripMenuItem3,
             this.pmnuColumnAdd,
-            this.pmnuRowAdd});
+            this.pmnuRowAdd,
+            this.toolStripMenuItem4,
+            this.pmnuDeleteColumn,
+            this.pmnuDeleteRow,
+            this.pmnuColumnInfo});
             this.PopupMenu1.Name = "PopupMenu1";
-            this.PopupMenu1.Size = new System.Drawing.Size(211, 134);
+            this.PopupMenu1.Size = new System.Drawing.Size(168, 208);
+            // 
+            // pmnuUpdate
+            // 
+            this.pmnuUpdate.Name = "pmnuUpdate";
+            this.pmnuUpdate.Size = new System.Drawing.Size(167, 24);
+            this.pmnuUpdate.Text = "DB Update";
+            this.pmnuUpdate.Click += new System.EventHandler(this.pmnuUpdate_Click);
+            // 
+            // pmnuInsert
+            // 
+            this.pmnuInsert.Name = "pmnuInsert";
+            this.pmnuInsert.Size = new System.Drawing.Size(167, 24);
+            this.pmnuInsert.Text = "DB Insert";
+            this.pmnuInsert.Click += new System.EventHandler(this.pmnuInsert_Click);
+            // 
+            // pmnuDelete
+            // 
+            this.pmnuDelete.Name = "pmnuDelete";
+            this.pmnuDelete.Size = new System.Drawing.Size(167, 24);
+            this.pmnuDelete.Text = "DB Delete";
+            this.pmnuDelete.Click += new System.EventHandler(this.pmnuDelete_Click);
+            // 
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(164, 6);
             // 
             // pmnuColumnAdd
             // 
             this.pmnuColumnAdd.Name = "pmnuColumnAdd";
-            this.pmnuColumnAdd.Size = new System.Drawing.Size(210, 24);
+            this.pmnuColumnAdd.Size = new System.Drawing.Size(167, 24);
             this.pmnuColumnAdd.Text = "Column 추가";
             this.pmnuColumnAdd.Click += new System.EventHandler(this.pmnuColumnAdd_Click);
             // 
             // pmnuRowAdd
             // 
             this.pmnuRowAdd.Name = "pmnuRowAdd";
-            this.pmnuRowAdd.Size = new System.Drawing.Size(210, 24);
+            this.pmnuRowAdd.Size = new System.Drawing.Size(167, 24);
             this.pmnuRowAdd.Text = "Row 추가";
             this.pmnuRowAdd.Click += new System.EventHandler(this.pmnuRowAdd_Click);
             // 
-            // pmnuUpdate
+            // toolStripMenuItem4
             // 
-            this.pmnuUpdate.Name = "pmnuUpdate";
-            this.pmnuUpdate.Size = new System.Drawing.Size(210, 24);
-            this.pmnuUpdate.Text = "DB Update";
-            this.pmnuUpdate.Click += new System.EventHandler(this.pmnuUpdate_Click);
+            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(164, 6);
+            // 
+            // pmnuDeleteColumn
+            // 
+            this.pmnuDeleteColumn.Name = "pmnuDeleteColumn";
+            this.pmnuDeleteColumn.Size = new System.Drawing.Size(167, 24);
+            this.pmnuDeleteColumn.Text = "Column 삭제";
+            this.pmnuDeleteColumn.Click += new System.EventHandler(this.pmnuDeleteColumn_Click);
+            // 
+            // pmnuDeleteRow
+            // 
+            this.pmnuDeleteRow.Name = "pmnuDeleteRow";
+            this.pmnuDeleteRow.Size = new System.Drawing.Size(167, 24);
+            this.pmnuDeleteRow.Text = "Row 삭제";
+            this.pmnuDeleteRow.Click += new System.EventHandler(this.pmnuDeleteRow_Click);
+            // 
+            // pmnuColumnInfo
+            // 
+            this.pmnuColumnInfo.Name = "pmnuColumnInfo";
+            this.pmnuColumnInfo.Size = new System.Drawing.Size(167, 24);
+            this.pmnuColumnInfo.Text = "Column 정보";
+            this.pmnuColumnInfo.Click += new System.EventHandler(this.pmnuColumnInfo_Click);
             // 
             // menuMain
             // 
@@ -125,7 +190,8 @@ namespace myDB
             this.menuMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.editToolStripMenuItem,
-            this.sQLToolStripMenuItem});
+            this.sQLToolStripMenuItem,
+            this.configToolStripMenuItem});
             this.menuMain.Location = new System.Drawing.Point(0, 0);
             this.menuMain.Name = "menuMain";
             this.menuMain.Size = new System.Drawing.Size(869, 28);
@@ -140,8 +206,9 @@ namespace myDB
             this.mnuMigration,
             this.toolStripMenuItem1,
             this.mnuOpen,
-            this.mnuSave,
-            this.mnuSaveas,
+            this.mnuUpdateTable,
+            this.mnuCreateTable,
+            this.toolStripMenuItem5,
             this.mnuExit});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(46, 24);
@@ -150,49 +217,71 @@ namespace myDB
             // newToolStripMenuItem
             // 
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(168, 26);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(201, 26);
             this.newToolStripMenuItem.Text = "New";
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(165, 6);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(198, 6);
             // 
             // mnuMigration
             // 
+            this.mnuMigration.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuMigrationImport,
+            this.mnuMigrationExport});
             this.mnuMigration.Name = "mnuMigration";
-            this.mnuMigration.Size = new System.Drawing.Size(168, 26);
-            this.mnuMigration.Text = "Migration...";
-            this.mnuMigration.Click += new System.EventHandler(this.mnuMigration_Click);
+            this.mnuMigration.Size = new System.Drawing.Size(201, 26);
+            this.mnuMigration.Text = "Migration...(.csv)";
+            // 
+            // mnuMigrationImport
+            // 
+            this.mnuMigrationImport.Name = "mnuMigrationImport";
+            this.mnuMigrationImport.Size = new System.Drawing.Size(137, 26);
+            this.mnuMigrationImport.Text = "Import";
+            this.mnuMigrationImport.Click += new System.EventHandler(this.mnuMigrationImport_Click);
+            // 
+            // mnuMigrationExport
+            // 
+            this.mnuMigrationExport.Name = "mnuMigrationExport";
+            this.mnuMigrationExport.Size = new System.Drawing.Size(137, 26);
+            this.mnuMigrationExport.Text = "Export";
+            this.mnuMigrationExport.Click += new System.EventHandler(this.mnuMigrationExport_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(165, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(198, 6);
             // 
             // mnuOpen
             // 
             this.mnuOpen.Name = "mnuOpen";
-            this.mnuOpen.Size = new System.Drawing.Size(168, 26);
+            this.mnuOpen.Size = new System.Drawing.Size(201, 26);
             this.mnuOpen.Text = "Open";
             this.mnuOpen.Click += new System.EventHandler(this.mnuOpen_Click);
             // 
-            // mnuSave
+            // mnuUpdateTable
             // 
-            this.mnuSave.Name = "mnuSave";
-            this.mnuSave.Size = new System.Drawing.Size(168, 26);
-            this.mnuSave.Text = "Save";
+            this.mnuUpdateTable.Name = "mnuUpdateTable";
+            this.mnuUpdateTable.Size = new System.Drawing.Size(201, 26);
+            this.mnuUpdateTable.Text = "Update Table";
             // 
-            // mnuSaveas
+            // mnuCreateTable
             // 
-            this.mnuSaveas.Name = "mnuSaveas";
-            this.mnuSaveas.Size = new System.Drawing.Size(168, 26);
-            this.mnuSaveas.Text = "Save As...";
+            this.mnuCreateTable.Name = "mnuCreateTable";
+            this.mnuCreateTable.Size = new System.Drawing.Size(201, 26);
+            this.mnuCreateTable.Text = "Create Table";
+            this.mnuCreateTable.Click += new System.EventHandler(this.mnuCreateTable_Click);
+            // 
+            // toolStripMenuItem5
+            // 
+            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(198, 6);
             // 
             // mnuExit
             // 
             this.mnuExit.Name = "mnuExit";
-            this.mnuExit.Size = new System.Drawing.Size(168, 26);
+            this.mnuExit.Size = new System.Drawing.Size(201, 26);
             this.mnuExit.Text = "Exit";
             // 
             // editToolStripMenuItem
@@ -207,31 +296,94 @@ namespace myDB
             // mnuColumnAdd
             // 
             this.mnuColumnAdd.Name = "mnuColumnAdd";
-            this.mnuColumnAdd.Size = new System.Drawing.Size(181, 26);
+            this.mnuColumnAdd.Size = new System.Drawing.Size(224, 26);
             this.mnuColumnAdd.Text = "Column 추가";
             this.mnuColumnAdd.Click += new System.EventHandler(this.mnuColumnAdd_Click);
             // 
             // mnuRowAdd
             // 
             this.mnuRowAdd.Name = "mnuRowAdd";
-            this.mnuRowAdd.Size = new System.Drawing.Size(181, 26);
+            this.mnuRowAdd.Size = new System.Drawing.Size(224, 26);
             this.mnuRowAdd.Text = "Row 추가";
             this.mnuRowAdd.Click += new System.EventHandler(this.mnuRowAdd_Click);
             // 
             // sQLToolStripMenuItem
             // 
             this.sQLToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.executeToolStripMenuItem});
+            this.mnuExecute});
             this.sQLToolStripMenuItem.Name = "sQLToolStripMenuItem";
             this.sQLToolStripMenuItem.Size = new System.Drawing.Size(50, 24);
             this.sQLToolStripMenuItem.Text = "SQL";
             // 
-            // executeToolStripMenuItem
+            // mnuExecute
             // 
-            this.executeToolStripMenuItem.Name = "executeToolStripMenuItem";
-            this.executeToolStripMenuItem.Size = new System.Drawing.Size(144, 26);
-            this.executeToolStripMenuItem.Text = "Execute";
-            this.executeToolStripMenuItem.Click += new System.EventHandler(this.executeToolStripMenuItem_Click);
+            this.mnuExecute.Name = "mnuExecute";
+            this.mnuExecute.Size = new System.Drawing.Size(224, 26);
+            this.mnuExecute.Text = "Execute";
+            this.mnuExecute.Click += new System.EventHandler(this.mnuExecute_Click);
+            // 
+            // configToolStripMenuItem
+            // 
+            this.configToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.textFileToolStripMenuItem,
+            this.mnuEcho});
+            this.configToolStripMenuItem.Name = "configToolStripMenuItem";
+            this.configToolStripMenuItem.Size = new System.Drawing.Size(69, 24);
+            this.configToolStripMenuItem.Text = "Config";
+            // 
+            // textFileToolStripMenuItem
+            // 
+            this.textFileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuTextUtf8,
+            this.mnuTextAnsi});
+            this.textFileToolStripMenuItem.Name = "textFileToolStripMenuItem";
+            this.textFileToolStripMenuItem.Size = new System.Drawing.Size(178, 26);
+            this.textFileToolStripMenuItem.Text = "Text File";
+            // 
+            // mnuTextUtf8
+            // 
+            this.mnuTextUtf8.Checked = true;
+            this.mnuTextUtf8.CheckOnClick = true;
+            this.mnuTextUtf8.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.mnuTextUtf8.Name = "mnuTextUtf8";
+            this.mnuTextUtf8.Size = new System.Drawing.Size(132, 26);
+            this.mnuTextUtf8.Text = "UTF-8";
+            this.mnuTextUtf8.Click += new System.EventHandler(this.mnuTextUtf8_Click);
+            // 
+            // mnuTextAnsi
+            // 
+            this.mnuTextAnsi.CheckOnClick = true;
+            this.mnuTextAnsi.Name = "mnuTextAnsi";
+            this.mnuTextAnsi.Size = new System.Drawing.Size(132, 26);
+            this.mnuTextAnsi.Text = "ANSI";
+            this.mnuTextAnsi.Click += new System.EventHandler(this.mnuTextAnsi_Click);
+            // 
+            // mnuEcho
+            // 
+            this.mnuEcho.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuEchoText,
+            this.mnuEchoGrid});
+            this.mnuEcho.Name = "mnuEcho";
+            this.mnuEcho.Size = new System.Drawing.Size(178, 26);
+            this.mnuEcho.Text = "Echo Option";
+            // 
+            // mnuEchoText
+            // 
+            this.mnuEchoText.CheckOnClick = true;
+            this.mnuEchoText.Name = "mnuEchoText";
+            this.mnuEchoText.Size = new System.Drawing.Size(121, 26);
+            this.mnuEchoText.Text = "Text";
+            this.mnuEchoText.Click += new System.EventHandler(this.mnuEchoText_Click);
+            // 
+            // mnuEchoGrid
+            // 
+            this.mnuEchoGrid.Checked = true;
+            this.mnuEchoGrid.CheckOnClick = true;
+            this.mnuEchoGrid.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.mnuEchoGrid.Name = "mnuEchoGrid";
+            this.mnuEchoGrid.Size = new System.Drawing.Size(121, 26);
+            this.mnuEchoGrid.Text = "Grid";
+            this.mnuEchoGrid.Click += new System.EventHandler(this.mnuEchoGrid_Click);
             // 
             // tbMemo
             // 
@@ -239,6 +391,7 @@ namespace myDB
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbMemo.ContextMenuStrip = this.PopupMenu2;
+            this.tbMemo.Font = new System.Drawing.Font("Consolas", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.tbMemo.Location = new System.Drawing.Point(0, 3);
             this.tbMemo.Multiline = true;
             this.tbMemo.Name = "tbMemo";
@@ -314,17 +467,6 @@ namespace myDB
             this.sbLabel2.Text = "sbLabel2";
             this.sbLabel2.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.sbLabel2_DropDownItemClicked);
             // 
-            // pmnuInsert
-            // 
-            this.pmnuInsert.Name = "pmnuInsert";
-            this.pmnuInsert.Size = new System.Drawing.Size(210, 24);
-            this.pmnuInsert.Text = "DB Insert";
-            // 
-            // toolStripMenuItem3
-            // 
-            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(207, 6);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -365,8 +507,8 @@ namespace myDB
         private System.Windows.Forms.ToolStripMenuItem mnuMigration;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem mnuOpen;
-        private System.Windows.Forms.ToolStripMenuItem mnuSave;
-        private System.Windows.Forms.ToolStripMenuItem mnuSaveas;
+        private System.Windows.Forms.ToolStripMenuItem mnuUpdateTable;
+        private System.Windows.Forms.ToolStripMenuItem mnuCreateTable;
         private System.Windows.Forms.ToolStripMenuItem mnuExit;
         private System.Windows.Forms.TextBox tbMemo;
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
@@ -383,10 +525,25 @@ namespace myDB
         private System.Windows.Forms.ToolStripStatusLabel sbLabel1;
         private System.Windows.Forms.ToolStripDropDownButton sbLabel2;
         private System.Windows.Forms.ToolStripMenuItem sQLToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem executeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mnuExecute;
         private System.Windows.Forms.ToolStripMenuItem pmnuUpdate;
         private System.Windows.Forms.ToolStripMenuItem pmnuInsert;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
+        private System.Windows.Forms.ToolStripMenuItem pmnuDelete;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem4;
+        private System.Windows.Forms.ToolStripMenuItem pmnuDeleteColumn;
+        private System.Windows.Forms.ToolStripMenuItem pmnuDeleteRow;
+        private System.Windows.Forms.ToolStripMenuItem mnuMigrationImport;
+        private System.Windows.Forms.ToolStripMenuItem mnuMigrationExport;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem5;
+        private System.Windows.Forms.ToolStripMenuItem configToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem textFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mnuTextUtf8;
+        private System.Windows.Forms.ToolStripMenuItem mnuTextAnsi;
+        private System.Windows.Forms.ToolStripMenuItem pmnuColumnInfo;
+        private System.Windows.Forms.ToolStripMenuItem mnuEcho;
+        private System.Windows.Forms.ToolStripMenuItem mnuEchoText;
+        private System.Windows.Forms.ToolStripMenuItem mnuEchoGrid;
     }
 }
 
