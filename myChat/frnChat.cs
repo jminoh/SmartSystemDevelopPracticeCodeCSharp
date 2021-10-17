@@ -18,14 +18,14 @@ namespace myChat
         {
             InitializeComponent();
         }
-        delegate void cbAddText(string str, int i);
+        delegate void cbAddText(string str, int i);             // CallBack 함수
         void AddText(string str, int i)
         {
-            if(tbServer.InvokeRequired || tbClient.InvokeRequired)
+            if(tbServer.InvokeRequired || tbClient.InvokeRequired || statusStrip1.InvokeRequired)
             {
-                cbAddText cb = new cbAddText(AddText);
-                object[] obj = { str, i };
-                Invoke(cb, obj);
+                cbAddText cb = new cbAddText(AddText);          // CallBack 함수 연결
+                object[] obj = { str, i };                      // AddText의 Argument list
+                Invoke(cb, obj);                                // 대리호출자 호출 -> AddText 재실행과 마찬가지(else문으로)
             }
             else
             {
@@ -33,13 +33,18 @@ namespace myChat
                     tbServer.Text += str;
                 else if (i == 2)
                     tbClient.Text += str;
+                else if (i == 3)
+                    sbClientList.DropDownItems.Add(str);
             }
         }
+
+        
         Socket sock = null;
-        TcpClient tcp = null;
+        TcpClient[] tcp = new TcpClient[10];
         TcpListener listen = null;
         Thread threadServer = null;     // Connect 요구 처리 Thread
         Thread threadRead = null;       // 입력 문자열 처리 Thread
+        int CurrentClientNum = 0;       
         private void btnServerStart_Click(object sender, EventArgs e)
         {
             if(listen != null)          // null 이면 정상 수행, 
@@ -57,7 +62,7 @@ namespace myChat
 
             threadServer = new Thread(ServerProcess);
             threadServer.Start();
-            threadRead = new Thread(ReadProcess);
+            //threadRead = new Thread(ReadProcess);             // ServerProcess에서 if문
         }
 
         void ServerProcess()            // Connect 요구 처리 Thread
@@ -66,33 +71,43 @@ namespace myChat
             {
                 if (listen.Pending())
                 {
-                    if (tcp != null)
-                    {
-                        tcp.Close();
-                        threadRead.Abort();
-                    }
-                    tcp = listen.AcceptTcpClient(); // 세션 수립
-                    string sLabel = tcp.Client.RemoteEndPoint.ToString();       // Client IP Address: Port(Session)
+                    if (CurrentClientNum == 9) break;       // Process Over     //
+                    //if (tcp != null)          // 새 접속요청에 Client 종료X
+                    //{
+                    //    tcp.Close();
+                    //    threadRead.Abort();
+                    //}
+                    tcp[CurrentClientNum] = listen.AcceptTcpClient();                             // 세션 수립        // AcceptTcpClient은 Blocking Mode
+                    string sLabel = tcp[CurrentClientNum].Client.RemoteEndPoint.ToString();       // Client IP Address: Port(Session)
                     AddText($"Client [{sLabel}] 로부터 접속되었습니다.\r\n", 1);      //tcp.Client는 Socket,
+                    //sbClientList.DropDownItems.Add(sLabel);                       // invoke 필요
+                    AddText(sLabel, 3);
                     sbLable1.Text = sLabel;
 
-                    threadRead = new Thread(ReadProcess);
-                    threadRead.Start();
+                    if(threadRead == null)          
+                    {
+                        threadRead = new Thread(ReadProcess);
+                        threadRead.Start();
+                    }
+                    CurrentClientNum++;
                 }
                 Thread.Sleep(100);
             }
         }
 
-        void ReadProcess()
+        void ReadProcess()          // Multi Client : CurrentClientNum
         {
-            NetworkStream ns = tcp.GetStream();
             byte[] bArr = new byte[512];
             while (true)
             {
-                if (ns.DataAvailable)
+                for(int i = 0; i < CurrentClientNum; i++)
                 {
-                    int n = ns.Read(bArr, 0, 512);
-                    AddText(Encoding.Default.GetString(bArr, 0, n), 1);
+                    NetworkStream ns = tcp[i].GetStream();
+                    if (ns.DataAvailable)
+                    {
+                        int n = ns.Read(bArr, 0, 512);
+                        AddText(Encoding.Default.GetString(bArr, 0, n), 1);
+                    }
                 }
                 Thread.Sleep(100);
             }
@@ -120,7 +135,7 @@ namespace myChat
                     }
                 }
                 sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);       // InterNetwork: Ethernet IPv4    // Socket 수립
-                sock.Connect(tbConnectIP.Text, int.Parse(tbConnectPort.Text));      // Connection 수립 요청 - 대기(Blocking Mode)
+                sock.Connect(tbConnectIP.Text, int.Parse(tbConnectPort.Text));      // Connection 수립 요청 - 대기(Blocking Mode) // Connection도 Blocking 함수
                 AddText($"Server [{tbConnectIP.Text}:{tbConnectPort.Text}] Connected OK.", 2);
                 threadClientRead = new Thread(ClientReadProcess);
                 threadClientRead.Start();
@@ -145,11 +160,33 @@ namespace myChat
             }
         }
 
+        int GetTcpIndex()                       // TCP List 중 선택되어 잇는 리스트 인덱스를 반환
+        {
+            for (int i = 0; i < CurrentClientNum; i++)
+            {
+                if (tcp[i].Client.RemoteEndPoint.ToString() == sbClientList.Text)
+                    return i;
+            }
+            return -1;
+        }
+
         private void pmnuSendClientText_Click(object sender, EventArgs e)
         {
             string str = (tbClient.SelectedText.Length == 0) ? tbClient.Text : tbClient.SelectedText;
             byte[] bArr = Encoding.Default.GetBytes(str);
             sock.Send(bArr);
+        }
+
+        private void pmnuSendServerText_Click(object sender, EventArgs e)
+        {
+            string str = (tbServer.SelectedText.Length == 0) ? tbServer.Text : tbServer.SelectedText;
+            byte[] bArr = Encoding.Default.GetBytes(str);
+            tcp[GetTcpIndex()].Client.Send(bArr);
+        }
+
+        private void sbClientList_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            sbClientList.Text = e.ClickedItem.Text;
         }
     }
 }

@@ -329,8 +329,8 @@ namespace myDB
 
         private void pmnuExecute_Click(object sender, EventArgs e)
         {
-            if (mnuEchoGrid.Checked) RunSql(tbMemo.Text);
-            else RunSql_noEcho(tbMemo.Text);
+            if (mnuEchoGrid.Checked) RunSql(tbMemo.SelectedText);
+            else RunSql_noEcho(tbMemo.SelectedText);
         }
 
         private void pmnuUpdate_Click(object sender, EventArgs e)           // Cell 입력하면, 해당 내용을 DB에 Write

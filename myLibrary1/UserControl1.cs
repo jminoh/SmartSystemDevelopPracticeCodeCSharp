@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using System.Data.SqlClient;
 
 namespace myLibrary1
 {
@@ -58,13 +59,66 @@ namespace myLibrary1
         public string GetString(string sec, string key, string def = "")                         // OverLoad or 인수 초기값 설정
         {
             StringBuilder buf = new StringBuilder(512);
-            GetPrivateProfileString(sec, key, "", buf, 512, fPath);             // 가져온 값, buf에 담김
+            GetPrivateProfileString(sec, key, def, buf, 512, fPath);             // 가져온 값, buf에 담김
             return buf.ToString();
         }
         public int WriteString(string sec, string key, string val)                      
         {
             return WritePrivateProfileString(sec, key, val, fPath);                    // int 값 반환
 
+        }
+    }
+
+    public class SqlDB
+    {
+        SqlConnection conn = null;
+        SqlCommand cmd = null;
+        string ConnString = null;
+        
+        public SqlDB(string str)   // ConnString 받기 위함     // 생성자는 private X
+        {
+            ConnString = str;
+            conn = new SqlConnection(ConnString);       // 새 connection수립
+            conn.Open();
+            cmd = new SqlCommand("", conn);
+        }
+        public object Run(string sql)      // object: return type 정해지지 X때. 받는 쪽에서 알아서 가져감
+        {
+            char[] ws = { ' ', '\t', '\n', '\r'};               // White Space
+            try
+            {
+                cmd.CommandText = sql;
+                if (sql.Trim().Split(' ')[0].ToLower() == "select")  // Split의 결과는 String Array   // "Select    "     Select      "select// 일괄적으로 소문자
+                {
+                    SqlDataReader sdr = cmd.ExecuteReader();         // SqlDataReader는 루틴 내에서 닫아줘야(return해서 다른 데서 처리 불가) // dr:임시저장소, 
+                    DataTable dt = new DataTable();                 // DataTable: 2차원 Array랑 비슷
+                    dt.Load(sdr);
+                    sdr.Close();                                     // SqlDataReader 안 닫아주면 계속 Error, 한 루프 내에서 닫아주는 것이 좋음
+
+                    return dt;
+                }
+                else
+                {
+                    return cmd.ExecuteNonQuery();                   // 결과값 int
+                }       
+            }
+            catch
+            {
+                return null;                   
+            }
+        }
+
+        public string GetString(string sql)                     // single field data 단일 데이터(1st record, 1st field)
+        {                   // select name from users where name='Noname'
+            try
+            {
+                cmd.CommandText = sql;
+                return cmd.ExecuteScalar().ToString();
+            }
+            catch(Exception e)
+            {
+                return e.Message;                               // 없으면 안 나옴
+            }
         }
     }
     public static class mylib                             // 만들 것이기 때문에 Form 상속 필요 X, 순수 클래스    // static: 
